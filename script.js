@@ -1,3 +1,5 @@
+import { updateGround } from "./ground";
+
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 30;
 
@@ -14,10 +16,12 @@ function update(time) {
         return
     }
   const delta = time - lastTime;
-  console.log(delta);
+  //console.log(delta);
+
+  updateGround(delta);
 
   lastTime = time;
-  //window.requestAnimationFrame(update);
+  window.requestAnimationFrame(update);
 }
 window.requestAnimationFrame(update);
 function setPixelToWorldScale() {
