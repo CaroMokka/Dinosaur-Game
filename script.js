@@ -1,5 +1,6 @@
 import { setupGround, updateGround } from "./ground.js";
 import { setupDinosaur, updateDinosaur } from "./dinosaur.js";
+import { setupCactus, updateCactus } from "./cactus.js";
 
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 30;
@@ -29,6 +30,7 @@ function update(time) {
 
   updateGround(delta, speedScale);
   updateDinosaur(delta, speedScale);
+  updateCactus(delta, speedScale);
   updateSpeedScale(delta);
   updateScore(delta);
 
@@ -51,6 +53,7 @@ function handleStart() {
   score = 0;
   setupGround();
   setupDinosaur();
+  setupCactus();
   startScreenElem.classList.add('hide');
   window.requestAnimationFrame(update);
 }
