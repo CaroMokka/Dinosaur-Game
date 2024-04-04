@@ -1,4 +1,5 @@
 import { setupGround, updateGround } from "./ground.js";
+import { setupDinosaur, updateDinosaur } from "./dinosaur.js";
 
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 30;
@@ -6,6 +7,7 @@ const SPEED_SCALE_INCREASE = 0.00001;
 
 const worldElem = document.querySelector("[data-world]");
 const scoreElem = document.querySelector("[data-score]");
+const startScreenElem = document.querySelector("[data-start-screen]");
 
 setPixelToWorldScale();
 document.addEventListener("resize", setPixelToWorldScale);
@@ -26,6 +28,7 @@ function update(time) {
   //console.log(delta);
 
   updateGround(delta, speedScale);
+  updateDinosaur(delta, speedScale);
   updateSpeedScale(delta);
   updateScore(delta);
 
@@ -47,6 +50,8 @@ function handleStart() {
   speedScale = 1;
   score = 0;
   setupGround();
+  setupDinosaur();
+  startScreenElem.classList.add('hide');
   window.requestAnimationFrame(update);
 }
 
