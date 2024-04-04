@@ -1,6 +1,6 @@
 import { setupGround, updateGround } from "./ground.js";
-import { setupDinosaur, updateDinosaur } from "./dinosaur.js";
-import { setupCactus, updateCactus } from "./cactus.js";
+import { setupDinosaur, updateDinosaur, getDinosaurRect, setDinosaurLose } from "./dinosaur.js";
+import { setupCactus, updateCactus, getCactusrects } from "./cactus.js";
 
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 30;
@@ -34,8 +34,26 @@ function update(time) {
   updateSpeedScale(delta);
   updateScore(delta);
 
+  if(checkLose()){
+    return handleLose();
+  }
+
   lastTime = time;
   window.requestAnimationFrame(update);
+}
+
+function checkLose() {
+  const dinosaurRect = getDinosaurRect();
+  return getCactusrects().some(rect => isCollision(rect, dinosaurRect));
+}
+
+function isCollision(rect1, rect2) {
+  return (
+    rect1.left < rect2.right &&
+    rect1.top < rect2.bottom &&
+    rect1.right > rect2.left &&
+    rect1.bottom > rect2.top
+  )
 }
 
 function updateSpeedScale(delta) {
@@ -56,6 +74,14 @@ function handleStart() {
   setupCactus();
   startScreenElem.classList.add('hide');
   window.requestAnimationFrame(update);
+}
+
+function handleLose() {
+  setDinosaurLose();
+  setTimeout(() => {
+  document.addEventListener("keydown", handleStart, { once: true });
+  }, 100)
+  startScreenElem.classList.remove("hide");
 }
 
 function setPixelToWorldScale() {
